@@ -2,9 +2,19 @@ package login;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.border.EmptyBorder;
+
+import classes.User;
+import userGUIs.userGUI;
+
+import javax.swing.*;
+import java.awt.BorderLayout;
 
 public class oldUserGUI extends JFrame {
 
@@ -20,6 +30,7 @@ public class oldUserGUI extends JFrame {
 				try {
 					oldUserGUI frame = new oldUserGUI();
 					frame.setVisible(true);
+					frame.setSize(500,500);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -32,11 +43,30 @@ public class oldUserGUI extends JFrame {
 	 */
 	public oldUserGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setSize(500,500);
+		JLabel askName; JTextField name;
+		askName = new JLabel("Enter your name to login");
+		name = new JTextField();
+		askName.setBounds(175, 79, 250, 20);
+		name.setHorizontalAlignment(SwingConstants.CENTER);
+		name.setBounds(171, 110, 150, 20);
+		
+		ActionListener saveName = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String username = name.getText();
+				/*
+				 *compare this against text file to verify
+				*/
+				userGUI userGui = new userGUI();
+				userGui.setVisible(true);
+			}
+		};
+		
+		name.addActionListener(saveName);
 
-		setContentPane(contentPane);
+		getContentPane().setLayout(null);
+		getContentPane().add(askName); getContentPane().add(name);
+		
 	}
 
 }
