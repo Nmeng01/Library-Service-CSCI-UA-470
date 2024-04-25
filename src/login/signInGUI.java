@@ -19,23 +19,6 @@ public class signInGUI extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					signInGUI frame = new signInGUI();
-					frame.setVisible(true);
-					frame.setSize(500,500); 
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public signInGUI() {
@@ -56,6 +39,8 @@ public class signInGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				newUserGUI newUser = new newUserGUI();
 				newUser.setVisible(true);
+				setVisible(false);
+				dispose();
 			}
 		};
 
@@ -63,6 +48,8 @@ public class signInGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				oldUserGUI returningUser = new oldUserGUI();
 				returningUser.setVisible(true);
+				setVisible(false);
+				dispose();
 			}
 		};
 		
@@ -71,6 +58,8 @@ public class signInGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				assistantGUI assistantGui = new assistantGUI();
 				assistantGui.setVisible(true);
+				setVisible(false);
+				dispose();
 			}
 		};
 
