@@ -3,39 +3,27 @@ package login;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+//import javax.swing.JButton;
+//import javax.swing.JFrame;
+//import javax.swing.JLabel;
+//import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import classes.User;
-
+import classes.*;
 import javax.swing.*;
 import userGUIs.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class newUserGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					newUserGUI frame = new newUserGUI();
-					frame.setVisible(true);
-					frame.setSize(500,500); 
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -52,13 +40,35 @@ public class newUserGUI extends JFrame {
 		
 		ActionListener saveName = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ArrayList<People> people;
+			    try {
+			      FileInputStream f = new FileInputStream("ppl.bin");
+			      ObjectInputStream o = new ObjectInputStream(f);
+			      people = (ArrayList<People>) o.readObject();
+			      o.close();
+			    } catch (IOException n) {
+			        people = new ArrayList<People>();
+			    } catch (ClassNotFoundException n) {
+			        people = new ArrayList<People>();
+			    }
 				String username = name.getText();
-				//User user = new User(username);
-				/*
-				 * save this to a textfile
-				*/
-				userGUI userGui = new userGUI();
-				userGui.setVisible(true);
+				boolean flag = true;
+				for(People p : people) {
+					if(p.getName().equalsIgnoreCase(username)) {
+						flag = false;
+						break;
+					}
+				}
+				if(flag) {
+					User user = new User(username);
+					userGUI userGui = new userGUI(user, people);
+					userGui.setVisible(true);
+					setVisible(false);
+					dispose();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Username is already taken. Please choose a different username.");
+				}
 			}
 		};
 		

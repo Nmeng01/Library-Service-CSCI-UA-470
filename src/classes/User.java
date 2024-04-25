@@ -1,8 +1,9 @@
 package classes;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class User extends People {
+public class User extends People implements Serializable {
 	private ArrayList<LibraryItem> borrowed;
 	
 	public User(String name) {

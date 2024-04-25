@@ -1,42 +1,28 @@
 package login;
 
 import java.awt.EventQueue;
-
 import javax.swing.border.EmptyBorder;
-
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.border.EmptyBorder;
-
-import classes.User;
+import classes.*;
 import userGUIs.userGUI;
-
 import javax.swing.*;
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class oldUserGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					oldUserGUI frame = new oldUserGUI();
-					frame.setVisible(true);
-					frame.setSize(500,500);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -53,12 +39,37 @@ public class oldUserGUI extends JFrame {
 		
 		ActionListener saveName = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ArrayList<People> people;
+			    try {
+			      FileInputStream f = new FileInputStream("ppl.bin");
+			      ObjectInputStream o = new ObjectInputStream(f);
+			      people = (ArrayList<People>) o.readObject();
+			      o.close();
+			    } catch (IOException n) {
+			        people = new ArrayList<People>();
+			    } catch (ClassNotFoundException n) {
+			        people = new ArrayList<People>();
+			    }
 				String username = name.getText();
-				/*
-				 *compare this against text file to verify
-				*/
-				userGUI userGui = new userGUI();
-				userGui.setVisible(true);
+				boolean flag = false;
+				People person = new User("temp");
+				for(People p : people) {
+					if(p.getName().equalsIgnoreCase(username)) {
+						people.remove(p);
+						flag = true;
+						person = p;
+						break;
+					}
+				}
+				if(flag) {
+					userGUI userGui = new userGUI((User)person, people);
+					userGui.setVisible(true);
+					setVisible(false);
+					dispose();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Username not found. Please try again or create a new account.");
+				}
 			}
 		};
 		

@@ -1,6 +1,8 @@
 package classes;
 
-public abstract class People {
+import java.io.Serializable;
+
+public abstract class People implements Serializable {
 	private String name;
 	
 	public People(String name) {
