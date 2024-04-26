@@ -1,6 +1,8 @@
 package classes;
 
-public abstract class LibraryItem {
+import java.io.Serializable;
+
+public abstract class LibraryItem implements Serializable {
 	private String name;
 	private boolean isBorrowed;
 	private String genre;
@@ -12,7 +14,7 @@ public abstract class LibraryItem {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -20,7 +22,7 @@ public abstract class LibraryItem {
 	}
 
 	public boolean isBorrowed() {
-		return isBorrowed;
+		return this.isBorrowed;
 	}
 
 	public void setBorrowed(boolean isBorrowed) {
@@ -28,7 +30,7 @@ public abstract class LibraryItem {
 	}
 
 	public String getGenre() {
-		return genre;
+		return this.genre;
 	}
 
 	public void setGenre(String genre) {

@@ -1,8 +1,9 @@
 package classes;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Inventory {
+public class Inventory implements Serializable {
 	private ArrayList<LibraryItem> inventory;
 	private ArrayList<String> requestList;
 	
