@@ -5,10 +5,8 @@ import java.util.ArrayList;
 public class Game extends LibraryItem {
 	private ArrayList<String> reviews;
 	private int numberOfPlayers;
-	public Game(String name, boolean isBorrowed, String genre, ArrayList<String> reviews, int numberOfPlayers) {
+	public Game(String name, boolean isBorrowed, String genre) {
 		super(name, isBorrowed, genre);
-		this.reviews = reviews;
-		this.numberOfPlayers = numberOfPlayers;
 	}
 	public ArrayList<String> getReviews() {
 		return reviews;

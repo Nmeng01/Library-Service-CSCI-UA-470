@@ -9,13 +9,9 @@ public class Movie extends LibraryItem {
 	private String format;
 	private ArrayList<String> notableActors;
 	
-	public Movie(String name, boolean isBorrowed, String genre, String director, ArrayList<String> reviews,
-			String format, ArrayList<String> notableActors) {
+	public Movie(String name, boolean isBorrowed, String genre, String format) {
 		super(name, isBorrowed, genre);
-		this.director = director;
-		this.reviews = reviews;
 		this.format = format;
-		this.notableActors = notableActors;
 	}
 	
 	public String getDirector() {
