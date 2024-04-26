@@ -11,12 +11,12 @@ public class addMovieGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
-	public addMovieGUI() {
+	public addMovieGUI(Inventory i, assistantGUI a) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500,500);
 		JLabel instructions, option, titleLbl, genreLbl, formatLbl, directorLbl, reviewsLbl, actorsLbl;
 		JTextField titleTxt, genreTxt, formatTxt, directorTxt, reviewsTxt, actorsTxt;
-		JButton submitBtn;
+		JButton submitBtn, backBtn;
 		
 		instructions = new JLabel("Enter the following:");
 		titleLbl = new JLabel("Title");
@@ -51,7 +51,7 @@ public class addMovieGUI extends JFrame {
 		actorsTxt.setBounds(180, 310, 150, 20);
 		
 		submitBtn = new JButton("Submit");
-		submitBtn.setBounds(180, 340, 150, 20);
+		submitBtn.setBounds(180, 350, 150, 20);
 		ActionListener submit = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(titleTxt.getText().isEmpty() || genreTxt.getText().isEmpty() || formatTxt.getText().isEmpty()) {
@@ -72,9 +72,8 @@ public class addMovieGUI extends JFrame {
 						List<String> actors = new ArrayList<String>(Arrays.asList(temp));
 						movie.setNotableActors((ArrayList<String>)actors);
 					}
-					// add to inventory
-					assistantGUI aGUI = new assistantGUI();
-					aGUI.setVisible(true);
+					i.addItem(movie);
+					a.setVisible(true);
 					setVisible(false);
 					dispose();
 				}
@@ -82,9 +81,21 @@ public class addMovieGUI extends JFrame {
 		};
 		submitBtn.addActionListener(submit);
 		
+		backBtn = new JButton("Back");
+		backBtn.setBounds(180, 390, 150, 20);
+		ActionListener back = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addItemGUI addItem = new addItemGUI(i, a);
+				addItem.setVisible(true);
+				setVisible(false);
+				dispose();
+			}
+		};
+		backBtn.addActionListener(back);
+		
 		getContentPane().setLayout(null);
 		getContentPane().add(instructions); getContentPane().add(titleLbl); getContentPane().add(genreLbl); getContentPane().add(formatLbl); getContentPane().add(option); getContentPane().add(directorLbl); getContentPane().add(reviewsLbl); getContentPane().add(actorsLbl);
 		getContentPane().add(titleTxt); getContentPane().add(genreTxt); getContentPane().add(formatTxt); getContentPane().add(directorTxt); getContentPane().add(reviewsTxt); getContentPane().add(actorsTxt);
-		getContentPane().add(submitBtn);
+		getContentPane().add(submitBtn); getContentPane().add(backBtn);
 	}
 }

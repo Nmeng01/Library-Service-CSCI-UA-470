@@ -11,12 +11,12 @@ public class addGameGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
-	public addGameGUI() {
+	public addGameGUI(Inventory i, assistantGUI a) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500,500);
 		JLabel instructions, option, titleLbl, genreLbl, reviewsLbl, playersLbl;
 		JTextField titleTxt, genreTxt, reviewsTxt, playersTxt;
-		JButton submitBtn;
+		JButton submitBtn, backBtn;
 		
 		instructions = new JLabel("Enter the following:");
 		titleLbl = new JLabel("Title");
@@ -64,9 +64,8 @@ public class addGameGUI extends JFrame {
 							JOptionPane.showMessageDialog(null, "Could not save number of players because of invalid input.");
 						}
 					}
-					// add to inventory
-					assistantGUI aGUI = new assistantGUI();
-					aGUI.setVisible(true);
+					i.addItem(game);
+					a.setVisible(true);
 					setVisible(false);
 					dispose();
 				}
@@ -74,9 +73,21 @@ public class addGameGUI extends JFrame {
 		};
 		submitBtn.addActionListener(submit);
 		
+		backBtn = new JButton("Back");
+		backBtn.setBounds(180, 310, 150, 20);
+		ActionListener back = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addItemGUI addItem = new addItemGUI(i, a);
+				addItem.setVisible(true);
+				setVisible(false);
+				dispose();
+			}
+		};
+		backBtn.addActionListener(back);
+		
 		getContentPane().setLayout(null);
 		getContentPane().add(instructions); getContentPane().add(titleLbl); getContentPane().add(genreLbl); getContentPane().add(option); getContentPane().add(reviewsLbl); getContentPane().add(playersLbl);
 		getContentPane().add(titleTxt); getContentPane().add(genreTxt); getContentPane().add(reviewsTxt); getContentPane().add(playersTxt);
-		getContentPane().add(submitBtn);
+		getContentPane().add(submitBtn); getContentPane().add(backBtn);
 	}
 }

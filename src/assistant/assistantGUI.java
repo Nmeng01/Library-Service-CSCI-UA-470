@@ -7,6 +7,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.*;
+import classes.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import login.*;
 
 public class assistantGUI extends JFrame {
 
@@ -19,6 +29,21 @@ public class assistantGUI extends JFrame {
 	public assistantGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500,500);
+		// get inventory
+		final Inventory inventory;
+		Inventory temp = new Inventory();
+	    try {
+	      FileInputStream f = new FileInputStream("data.bin");
+	      ObjectInputStream o = new ObjectInputStream(f);
+	      temp = (Inventory) o.readObject();
+	      o.close();
+	    } catch (IOException n) {
+	        temp = new Inventory();
+	    } catch (ClassNotFoundException n) {
+	        temp = new Inventory();
+	    }
+	    inventory = temp;
+		// Layout
 		JButton addBtn, removeBtn, viewRequestsBtn, signOutBtn;
 		JLabel question;
 		question = new JLabel("What would you like to do?");
@@ -34,13 +59,34 @@ public class assistantGUI extends JFrame {
 		
 		ActionListener add = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addItemGUI addItem = new addItemGUI();
+				addItemGUI addItem = new addItemGUI(inventory, assistantGUI.this);
 				addItem.setVisible(true);
+				setVisible(false);
+			}
+		};
+		addBtn.addActionListener(add);
+		
+		ActionListener signOut = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+                    FileOutputStream f = new FileOutputStream("data.bin");
+                    ObjectOutputStream o = new ObjectOutputStream(f);
+                    o.writeObject(inventory);
+                    o.close();
+                  } catch (FileNotFoundException n) {
+                    System.out.println("Error: File not found");
+                  } catch (IOException i) {
+                    System.out.println("Error writing to file:" + i.getMessage());
+                    i.printStackTrace();
+                  }
+				signInGUI sGUI = new signInGUI();
+				sGUI.setVisible(true);
+				sGUI.setSize(500,500);
 				setVisible(false);
 				dispose();
 			}
 		};
-		addBtn.addActionListener(add);
+		signOutBtn.addActionListener(signOut);
 		
 		getContentPane().setLayout(null);
 		getContentPane().add(question); getContentPane().add(addBtn); getContentPane().add(removeBtn); getContentPane().add(viewRequestsBtn); getContentPane().add(signOutBtn);
