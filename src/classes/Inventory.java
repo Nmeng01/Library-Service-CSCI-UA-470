@@ -11,8 +11,8 @@ public class Inventory {
 		this.requestList = new ArrayList<String>();
 	}
 	
-	public void addItem() {
-		
+	public void addItem(LibraryItem l) {
+		this.inventory.add(l);
 	}
 	public void removeItem() {
 		
