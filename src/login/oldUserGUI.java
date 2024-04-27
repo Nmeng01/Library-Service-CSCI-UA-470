@@ -50,6 +50,8 @@ public class oldUserGUI extends JFrame {
 				dispose();
 		 	}
 		 });
+		
+		
 		ActionListener saveName = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<People> people;

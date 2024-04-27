@@ -44,6 +44,8 @@ public class userGUI extends JFrame {
 		allItemsBtn = new JButton("View All My Items");
 		signOutBtn = new JButton("Sign out");
 		
+		
+		
 		signOutBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	userGUI.this.people.add(userGUI.this.user);
