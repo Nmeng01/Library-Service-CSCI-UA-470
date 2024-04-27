@@ -31,12 +31,25 @@ public class oldUserGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500,500);
 		JLabel askName; JTextField name;
+		
 		askName = new JLabel("Enter your name to login");
 		name = new JTextField();
 		askName.setBounds(175, 79, 250, 20);
 		name.setHorizontalAlignment(SwingConstants.CENTER);
 		name.setBounds(171, 110, 150, 20);
 		
+		JButton backBtn = new JButton("Back");
+		backBtn.setBounds(0, 0, 89, 23);
+
+		ActionListener backBtnAction = (new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 		signInGUI signIn = new signInGUI();
+		 		signIn.setSize(500,500);
+				signIn.setVisible(true);
+				setVisible(false);
+				dispose();
+		 	}
+		 });
 		ActionListener saveName = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<People> people;
@@ -74,9 +87,9 @@ public class oldUserGUI extends JFrame {
 		};
 		
 		name.addActionListener(saveName);
-
+		backBtn.addActionListener(backBtnAction);
 		getContentPane().setLayout(null);
-		getContentPane().add(askName); getContentPane().add(name);
+		getContentPane().add(askName); getContentPane().add(name);getContentPane().add(backBtn);
 		
 	}
 
