@@ -76,6 +76,15 @@ public class assistantGUI extends JFrame {
 		
 		removeBtn.addActionListener(delete);
 		
+		ActionListener openRequestList = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				requestListGUI reqGUI = new requestListGUI(inventory, assistantGUI.this);
+				reqGUI.setVisible(true);
+				setVisible(false);
+			}
+		};
+		viewRequestsBtn.addActionListener(openRequestList);
+		
 		ActionListener signOut = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

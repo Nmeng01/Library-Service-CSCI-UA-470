@@ -23,6 +23,10 @@ public class Inventory implements Serializable {
 		this.inventory.remove(item);
 	}
 	
+	public void removeRequest(String s) {
+		this.requestList.remove(s);
+	}
+	
 	public ArrayList<LibraryItem> filterBy(String type) {
 		return new ArrayList<LibraryItem>();
 	}
