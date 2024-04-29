@@ -1,6 +1,7 @@
 package userGUIs;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.EventQueue;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -59,22 +60,35 @@ public class userGUI extends JFrame {
             	ArrayList<LibraryItem> items = u.viewItems();
             	List<String[]> tableData = new ArrayList<>();
 				for(LibraryItem item: items) {
-					String[] rowData = {item.getName(), item.getGenre()};				           	
+					String[] rowData = {item.getName(), item.getGenre()};	
+					tableData.add(rowData);
 				}
 				String[][] tableData2 = new String[tableData.size()][];
 				tableData.toArray(tableData2);
 				String[] columnNames = { "Name", "Genre" };
 				availableInventory = new JTable(tableData2, columnNames);
 				availableInventory.setDefaultEditor(Object.class, null);  //to make sure users can't edit the table values bc or else they can double click and modify it :(
-				availableInventory.setBounds(0,0,500,500);
+				availableInventory.setBounds(0,23,500,500);
+				JButton backBtn = new JButton("Back");
+				backBtn.setBounds(0, 0, 89, 23);
+				 ActionListener backBtnAction = (new ActionListener() {
+				 	 public void actionPerformed(ActionEvent e) {
+				 		getContentPane().add(borrowBtn); getContentPane().add(returnBtn); getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn); getContentPane().add(question);
+						getContentPane().remove(availableInventory);
+						getContentPane().remove(backBtn);
+						revalidate();
+				 		repaint();
+				 	}
+				  });
+				 
+				 backBtn.addActionListener(backBtnAction);
+				 
 				getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question);
-				getContentPane().add(availableInventory);
+				getContentPane().add(availableInventory); getContentPane().add(backBtn);
 				revalidate();
 		 		repaint();
             }
-				
-				
-				
+					
         });
 
 		borrowBtn.addActionListener( new ActionListener() {
@@ -95,8 +109,23 @@ public class userGUI extends JFrame {
 				String[] columnNames = { "Name", "Genre" };
 				availableInventory = new JTable(tableData2, columnNames);
 				availableInventory.setDefaultEditor(Object.class, null);  //to make sure users can't edit the table values bc or else they can double click and modify it :(
-				availableInventory.setBounds(0,0,500,500);
+				availableInventory.setBounds(0,23,500,500);
 				
+				JButton backBtn = new JButton("Back");
+				backBtn.setBounds(0, 0, 89, 23);
+
+				 ActionListener backBtnAction = (new ActionListener() {
+				 	 public void actionPerformed(ActionEvent e) {
+				 		getContentPane().add(borrowBtn); getContentPane().add(returnBtn); getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn); getContentPane().add(question);
+						getContentPane().remove(availableInventory);
+						getContentPane().remove(backBtn);
+						revalidate();
+				 		repaint();
+				 	}
+				  });
+				 
+				 backBtn.addActionListener(backBtnAction);
+				 
 				availableInventory.getSelectionModel().addListSelectionListener( new ListSelectionListener () {
 					  public void valueChanged(ListSelectionEvent event) {
 						  int selectedRow = availableInventory.getSelectedRow();
@@ -123,22 +152,80 @@ public class userGUI extends JFrame {
 				//idea source: https://stackoverflow.com/questions/4795586/determine-which-jtable-cell-is-clicked
 				//revalidate();
 				getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question);
-				getContentPane().add(availableInventory);
+				getContentPane().add(availableInventory); getContentPane().add(backBtn);
 				revalidate();
 		 		repaint();
 				//show the entire available inventory -  done
 				//set the item as borrowed - done
-				//add it to the users own borrowed list 
+				//add it to the users own borrowed list - done
 			}
 		});
 		//idea sources: https://www.digitalocean.com/community/tutorials/java-list-add-addall-methods
 		//idea source: https://www.geeksforgeeks.org/java-swing-jtable/
 
 		 returnBtn.addActionListener( new ActionListener() {
-		 	public void actionPerformed(ActionEvent e) {
-				//should only show the stuff thats in their borrowed list
-		 		
-		 	}
+			 public void actionPerformed(ActionEvent e) {
+				    JTable availableInventory;
+	            	ArrayList<LibraryItem> items = u.viewItems();
+	            	List<String[]> tableData = new ArrayList<>();
+					for(LibraryItem item: items) {
+						String[] rowData = {item.getName(), item.getGenre()};	
+						tableData.add(rowData);
+					}
+					String[][] tableData2 = new String[tableData.size()][];
+					tableData.toArray(tableData2);
+					String[] columnNames = { "Name", "Genre" };
+					availableInventory = new JTable(tableData2, columnNames);
+					availableInventory.setDefaultEditor(Object.class, null);  //to make sure users can't edit the table values bc or else they can double click and modify it :(
+					availableInventory.setBounds(0,23,500,500);
+					
+					JButton backBtn = new JButton("Back");
+					backBtn.setBounds(0, 0, 89, 23);
+
+					 ActionListener backBtnAction = (new ActionListener() {
+					 	 public void actionPerformed(ActionEvent e) {
+					 		getContentPane().add(borrowBtn); getContentPane().add(returnBtn); getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn); getContentPane().add(question);
+							getContentPane().remove(availableInventory);
+							getContentPane().remove(backBtn);
+							revalidate();
+					 		repaint();
+					 	}
+					  });
+					 
+					 backBtn.addActionListener(backBtnAction);
+					 
+					availableInventory.getSelectionModel().addListSelectionListener( new ListSelectionListener () {
+						  public void valueChanged(ListSelectionEvent event) {
+							  int selectedRow = availableInventory.getSelectedRow();
+							  Object itemName = availableInventory.getValueAt(selectedRow, 0); 
+							  for(LibraryItem item: items) {
+								  if (item.getName().equals(itemName)) {
+					                    item.setBorrowed(false);	
+								  }
+				            	}
+							  JOptionPane.showMessageDialog(null, "You have returned: "+itemName);
+							  Inventory inventoryNew = new Inventory();
+							  LibraryItem borrowed = null;
+							  for(LibraryItem item: items) {
+								  inventoryNew.addItem(item);
+								  borrowed = item;
+				              }
+						      writeInventory(inventoryNew); 
+						      u.returnItem(borrowed);					      
+						      revalidate();
+						      repaint();
+						  }
+					});
+					//idea source: https://stackoverflow.com/questions/4795586/determine-which-jtable-cell-is-clicked
+					//revalidate();
+					getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question);
+					getContentPane().add(availableInventory); getContentPane().add(backBtn);
+					revalidate();
+			 		repaint();
+					//show the entire available inventory -  done
+					//set the item as borrowed - done
+					//add it to the users own borrowed list - done
+				}
 		 });
 		
 		signOutBtn.addActionListener(new ActionListener() {
@@ -207,32 +294,4 @@ public class userGUI extends JFrame {
           }
 	}	
 	
-//	public ArrayList<People> readPeople() {
-//		try {
-//		      FileInputStream f = new FileInputStream("ppl.bin");
-//		      ObjectInputStream o = new ObjectInputStream(f);
-//		      people = (ArrayList<People>) o.readObject();
-//		      o.close();
-//		    } catch (IOException n) {
-//		        System.out.println("error");
-//		    } catch (ClassNotFoundException n) {
-//		    	System.out.println("error_2");
-//		    }
-//	   return people;
-//	}
-	
-//	public void writePeople(People newPpl) {
-//		try {
-//            FileOutputStream f = new FileOutputStream("ppl.bin");
-//            ObjectOutputStream o = new ObjectOutputStream(f);
-//            o.writeObject(newPpl);
-//            o.close();
-//          } catch (FileNotFoundException n) {
-//            System.out.println("Error: File not found");
-//          } catch (IOException i) {
-//            System.out.println("Error writing to file:" + i.getMessage());
-//            i.printStackTrace();
-//          }
-//	}
-
 }
