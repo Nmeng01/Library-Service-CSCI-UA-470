@@ -20,6 +20,12 @@ public class Game extends LibraryItem {
 	public void setNumberOfPlayers(int numberOfPlayers) {
 		this.numberOfPlayers = numberOfPlayers;
 	}
+	@Override
+	public String toString() {
+		return "Game - Name: " + this.getName() + " | Genre: " + this.getGenre() + " | Borrowed: " + this.isBorrowed();
+
+	}
+	
 	
 	
 

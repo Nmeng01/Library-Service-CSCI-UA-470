@@ -26,4 +26,11 @@ public class Book extends LibraryItem {
 		this.levelOfReading = l;
 	}
 
+	@Override
+	public String toString() {
+		return "Book - Name: " + this.getName() + " | Genre: " + this.getGenre() + " | Borrowed: " + this.isBorrowed();
+
+	}
+	
+
 }

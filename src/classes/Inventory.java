@@ -15,8 +15,12 @@ public class Inventory implements Serializable {
 	public void addItem(LibraryItem l) {
 		this.inventory.add(l);
 	}
-	public void removeItem() {
-		
+	public void removeItem(int index) {
+		this.inventory.remove(index);
+	}
+	
+	public void removeItem(LibraryItem item) {
+		this.inventory.remove(item);
 	}
 	
 	public ArrayList<LibraryItem> filterBy(String type) {
