@@ -13,11 +13,9 @@ public class User extends People implements Serializable {
 	}
 		
 	public void borrowItem(LibraryItem n) {
-		//add item to borrowed
 		borrowed.add(n);
 	}
 	public void returnItem(LibraryItem o) {
-		//remove from borrowed
 		Iterator<LibraryItem> borrowedItr = borrowed.iterator();
 		while (borrowedItr.hasNext()) { 
 			LibraryItem item = borrowedItr.next();

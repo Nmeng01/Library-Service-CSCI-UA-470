@@ -44,13 +44,14 @@ public class userGUI extends JFrame {
 		this.people = p;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500,500);
-		JButton borrowBtn, returnBtn, allItemsBtn, signOutBtn;
+		JButton borrowBtn, returnBtn, allItemsBtn, requestItemBtn, signOutBtn;
 		JLabel question;
 		question = new JLabel("How can we help you?");
 		question.setBounds(185, 82, 150, 20);
 		borrowBtn = new JButton("Borrow Item");
 		returnBtn = new JButton("Return Item");
 		allItemsBtn = new JButton("View All My Items");
+		requestItemBtn = new JButton("Request an Item To Be Added");
 		signOutBtn = new JButton("Sign out");
 		
 		allItemsBtn.addActionListener(new ActionListener() {
@@ -163,7 +164,7 @@ public class userGUI extends JFrame {
 		//idea sources: https://www.digitalocean.com/community/tutorials/java-list-add-addall-methods
 		//idea source: https://www.geeksforgeeks.org/java-swing-jtable/
 
-		 returnBtn.addActionListener( new ActionListener() {
+		returnBtn.addActionListener( new ActionListener() {
 			 public void actionPerformed(ActionEvent e) {
 				    JTable availableInventory;
 	            	ArrayList<LibraryItem> items = u.viewItems();
@@ -258,10 +259,11 @@ public class userGUI extends JFrame {
 		borrowBtn.setBounds(169, 113, 150, 20);
 		returnBtn.setBounds(169, 145, 150, 20);
 		allItemsBtn.setBounds(169, 177, 150, 20);
-		signOutBtn.setBounds(169, 209, 150, 20);
+		requestItemBtn.setBounds(142, 209, 200, 20);
+		signOutBtn.setBounds(169, 241, 150, 20);
 		getContentPane().setLayout(null);
 		getContentPane().add(borrowBtn); getContentPane().add(returnBtn); 
-		getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn);
+		getContentPane().add(allItemsBtn); getContentPane().add(requestItemBtn); getContentPane().add(signOutBtn);
 		getContentPane().add(question);
 	}
 	
