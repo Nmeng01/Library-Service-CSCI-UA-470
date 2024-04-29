@@ -5,12 +5,19 @@ import java.awt.EventQueue;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -19,6 +26,7 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import login.*;
 import classes.*;
+
 
 public class userGUI extends JFrame {
 
@@ -31,6 +39,8 @@ public class userGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public userGUI(User u, ArrayList<People> p) {
+		
+		
 		this.user = u;
 		this.people = p;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,6 +54,91 @@ public class userGUI extends JFrame {
 		allItemsBtn = new JButton("View All My Items");
 		signOutBtn = new JButton("Sign out");
 		
+		allItemsBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	JTable availableInventory;
+				Inventory inventory = readInventory();
+            	ArrayList<LibraryItem> items = inventory.displayAll();
+            	
+            	List<String[]> tableData = new ArrayList<>();
+				for(LibraryItem item: items) {
+					String[] rowData = {item.getName(), item.getGenre()};
+				    tableData.add(rowData);
+            	}
+				String[][] tableData2 = new String[tableData.size()][];
+				tableData.toArray(tableData2);
+				String[] columnNames = { "Name", "Genre" };
+				availableInventory = new JTable(tableData2, columnNames);
+				availableInventory.setDefaultEditor(Object.class, null);  //to make sure users can't edit the table values bc or else they can double click and modify it :(
+				availableInventory.setBounds(0,0,500,500);
+				getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question);
+				getContentPane().add(availableInventory);
+				revalidate();
+		 		repaint();
+            }
+        });
+
+		borrowBtn.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JTable availableInventory;
+				Inventory inventory = readInventory();
+            	ArrayList<LibraryItem> items = inventory.displayAll();
+            	
+            	List<String[]> tableData = new ArrayList<>();
+				for(LibraryItem item: items) {
+					if(item.isBorrowed() == false) {
+						String[] rowData = {item.getName(), item.getGenre()};
+					    tableData.add(rowData);
+					}
+            	}
+				String[][] tableData2 = new String[tableData.size()][];
+				tableData.toArray(tableData2);
+				String[] columnNames = { "Name", "Genre" };
+				availableInventory = new JTable(tableData2, columnNames);
+				availableInventory.setDefaultEditor(Object.class, null);  //to make sure users can't edit the table values bc or else they can double click and modify it :(
+				availableInventory.setBounds(0,0,500,500);
+				
+				availableInventory.getSelectionModel().addListSelectionListener( new ListSelectionListener () {
+					  public void valueChanged(ListSelectionEvent event) {
+						  int selectedRow = availableInventory.getSelectedRow();
+						  Object itemName = availableInventory.getValueAt(selectedRow, 0); 
+						  for(LibraryItem item: items) {
+							  if (item.getName().equals(itemName)) {
+				                    item.setBorrowed(true);	
+				                    System.out.println("i updated!!!");
+							  }
+			            	}
+						  JOptionPane.showMessageDialog(null, "You have checked out: "+itemName);
+						  Inventory inventoryNew = new Inventory();
+						  for(LibraryItem item: items) {
+							  inventoryNew.addItem(item);
+			              }
+					      writeInventory(inventoryNew); 
+					      revalidate();
+					      repaint();
+					  }
+				});
+				//idea source: https://stackoverflow.com/questions/4795586/determine-which-jtable-cell-is-clicked
+				//revalidate();
+				getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question);
+				getContentPane().add(availableInventory);
+				revalidate();
+		 		repaint();
+				//show the entire available inventory -  done
+				//set the item as borrowed - done
+				//add it to the users own borrowed list 
+			}
+		});
+		//idea sources: https://www.digitalocean.com/community/tutorials/java-list-add-addall-methods
+		//idea source: https://www.geeksforgeeks.org/java-swing-jtable/
+
+		 returnBtn.addActionListener( new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+				//should only show the stuff thats in their borrowed list
+		 		
+		 	}
+		 });
+		
 		signOutBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	userGUI.this.people.add(userGUI.this.user);
@@ -56,7 +151,7 @@ public class userGUI extends JFrame {
                     System.out.println("Error: File not found");
                   } catch (IOException i) {
                     System.out.println("Error writing to file:" + i.getMessage());
-                    i.printStackTrace();
+                    i.printStackTrace(); 
                   }
             	try {
 					signInGUI frame = new signInGUI();
@@ -80,5 +175,35 @@ public class userGUI extends JFrame {
 		getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn);
 		getContentPane().add(question);
 	}
+	
+	public Inventory readInventory() {
+		 Inventory i = null;
+		 try {
+		      FileInputStream f = new FileInputStream("data.bin");
+		      ObjectInputStream o = new ObjectInputStream(f);
+		      i = (Inventory) o.readObject();
+		      o.close();
+		    } catch (IOException n) {
+		        System.out.println("error");
+		    } catch (ClassNotFoundException n) {
+		    	System.out.println("error_2");
+		    }
+	   return i;
+	}
+	
+	public void writeInventory(Inventory newInv) {
+		try {
+            FileOutputStream f = new FileOutputStream("data.bin");
+            ObjectOutputStream o = new ObjectOutputStream(f);
+            o.writeObject(newInv);
+            o.close();
+          } catch (FileNotFoundException n) {
+            System.out.println("Error: File not found");
+          } catch (IOException i) {
+            System.out.println("Error writing to file:" + i.getMessage());
+            i.printStackTrace();
+          }
+	}	
+	
 
 }
