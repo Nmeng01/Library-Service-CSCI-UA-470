@@ -6,11 +6,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -19,6 +23,7 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import login.*;
 import classes.*;
+
 
 public class userGUI extends JFrame {
 
@@ -31,6 +36,8 @@ public class userGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public userGUI(User u, ArrayList<People> p) {
+		
+		
 		this.user = u;
 		this.people = p;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,7 +51,59 @@ public class userGUI extends JFrame {
 		allItemsBtn = new JButton("View All My Items");
 		signOutBtn = new JButton("Sign out");
 		
-		
+		allItemsBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	Inventory inventory = readInventory();
+            	ArrayList<LibraryItem> items = inventory.displayAll();
+            	for(LibraryItem item: items) {
+            		// System.out.println(item);
+            	}
+            }
+        });
+
+		borrowBtn.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JTable availableInventory;
+				Inventory inventory = readInventory();
+            	ArrayList<LibraryItem> items = inventory.displayAll();
+            	
+            	List<String[]> tableData = new ArrayList<>();
+				for(LibraryItem item: items) {
+					String[] rowData = {item.getName(), item.getGenre()};
+				    tableData.add(rowData);
+            	}
+				String[][] tableData2 = new String[tableData.size()][];
+				tableData.toArray(tableData2);
+				String[] columnNames = { "Name", "Genre" };
+				availableInventory = new JTable(tableData2, columnNames);
+				
+				
+//				availableInventory.getSelectionModel().addListSelectionListener(){
+//						public void actionPerformed(ActionEvent e) {
+//							System.out.println()
+//						}
+//				};
+				
+				
+				availableInventory.setDefaultEditor(Object.class, null);  //to make sure users can't edit the table values
+				availableInventory.setBounds(0,0,500,500);
+				getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question);
+				getContentPane().add(availableInventory);
+				revalidate();
+		 		repaint();
+				//show the entire available inventory
+				//set the item as borrowed
+				//add it to the uers own borrowed list
+			}
+		});
+		//sources: https://www.digitalocean.com/community/tutorials/java-list-add-addall-methods
+		//source: https://www.geeksforgeeks.org/java-swing-jtable/
+
+		// returnBtn.addActionListener( new ActionListener() {
+		// 	public void actionPerformed(ActionEvent e) {
+				//should only show the stuff thats in their borrowed list
+		// 	}
+		// });
 		
 		signOutBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -81,6 +140,21 @@ public class userGUI extends JFrame {
 		getContentPane().add(borrowBtn); getContentPane().add(returnBtn); 
 		getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn);
 		getContentPane().add(question);
+	}
+	
+	public Inventory readInventory() {
+		 Inventory i = null;
+		 try {
+		      FileInputStream f = new FileInputStream("data.bin");
+		      ObjectInputStream o = new ObjectInputStream(f);
+		      i = (Inventory) o.readObject();
+		      o.close();
+		    } catch (IOException n) {
+		        System.out.println("error");
+		    } catch (ClassNotFoundException n) {
+		    	System.out.println("error_2");
+		    }
+	   return i;
 	}
 
 }
