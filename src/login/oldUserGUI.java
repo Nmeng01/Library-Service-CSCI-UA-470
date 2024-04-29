@@ -76,7 +76,7 @@ public class oldUserGUI extends JFrame {
 			    }
 				String username = name.getText();
 				boolean flag = false;
-				People person = new User("temp");
+				People person = new User("temp"); //changed to username from temp
 				for(People p : people) {
 					if(p.getName().equalsIgnoreCase(username)) {
 						people.remove(p);
@@ -112,7 +112,7 @@ public class oldUserGUI extends JFrame {
 			    }
 				String assistantName = name.getText();
 				boolean flag = false;
-				People person = new User("temp");
+				People person = new User("temp"); //changed to assistant name from temp
 				for(People p : people) {
 					if(p.getName().equalsIgnoreCase(assistantName)) {
 						people.remove(p);

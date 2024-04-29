@@ -38,9 +38,7 @@ public class userGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public userGUI(User u, ArrayList<People> p) {
-		
-		
+	public userGUI(User u, ArrayList<People> p) {		
 		this.user = u;
 		this.people = p;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,15 +54,13 @@ public class userGUI extends JFrame {
 		
 		allItemsBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	//only the users checked out items
             	JTable availableInventory;
-				Inventory inventory = readInventory();
-            	ArrayList<LibraryItem> items = inventory.displayAll();
-            	
+            	ArrayList<LibraryItem> items = u.viewItems();
             	List<String[]> tableData = new ArrayList<>();
 				for(LibraryItem item: items) {
-					String[] rowData = {item.getName(), item.getGenre()};
-				    tableData.add(rowData);
-            	}
+					String[] rowData = {item.getName(), item.getGenre()};				           	
+				}
 				String[][] tableData2 = new String[tableData.size()][];
 				tableData.toArray(tableData2);
 				String[] columnNames = { "Name", "Genre" };
@@ -76,6 +72,9 @@ public class userGUI extends JFrame {
 				revalidate();
 		 		repaint();
             }
+				
+				
+				
         });
 
 		borrowBtn.addActionListener( new ActionListener() {
@@ -105,15 +104,18 @@ public class userGUI extends JFrame {
 						  for(LibraryItem item: items) {
 							  if (item.getName().equals(itemName)) {
 				                    item.setBorrowed(true);	
-				                    System.out.println("i updated!!!");
+//				                    System.out.println("i updated!!!");
 							  }
 			            	}
 						  JOptionPane.showMessageDialog(null, "You have checked out: "+itemName);
 						  Inventory inventoryNew = new Inventory();
+						  LibraryItem borrowed = null;
 						  for(LibraryItem item: items) {
 							  inventoryNew.addItem(item);
+							  borrowed = item;
 			              }
 					      writeInventory(inventoryNew); 
+					      u.borrowItem(borrowed);					      
 					      revalidate();
 					      repaint();
 					  }
@@ -205,5 +207,32 @@ public class userGUI extends JFrame {
           }
 	}	
 	
+//	public ArrayList<People> readPeople() {
+//		try {
+//		      FileInputStream f = new FileInputStream("ppl.bin");
+//		      ObjectInputStream o = new ObjectInputStream(f);
+//		      people = (ArrayList<People>) o.readObject();
+//		      o.close();
+//		    } catch (IOException n) {
+//		        System.out.println("error");
+//		    } catch (ClassNotFoundException n) {
+//		    	System.out.println("error_2");
+//		    }
+//	   return people;
+//	}
+	
+//	public void writePeople(People newPpl) {
+//		try {
+//            FileOutputStream f = new FileOutputStream("ppl.bin");
+//            ObjectOutputStream o = new ObjectOutputStream(f);
+//            o.writeObject(newPpl);
+//            o.close();
+//          } catch (FileNotFoundException n) {
+//            System.out.println("Error: File not found");
+//          } catch (IOException i) {
+//            System.out.println("Error writing to file:" + i.getMessage());
+//            i.printStackTrace();
+//          }
+//	}
 
 }

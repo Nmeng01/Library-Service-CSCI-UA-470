@@ -108,7 +108,7 @@ public class newUserGUI extends JFrame {
 					}
 				}
 				if(flag) {
-					//Assistant assistant = new Assistant(assistantName);
+					Assistant assistant = new Assistant(assistantName);
 					assistantGUI assistantGui = new assistantGUI();
 					assistantGui.setVisible(true);
 					setVisible(false);
