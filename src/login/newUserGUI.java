@@ -109,7 +109,7 @@ public class newUserGUI extends JFrame {
 				}
 				if(flag) {
 					Assistant assistant = new Assistant(assistantName);
-					assistantGUI assistantGui = new assistantGUI();
+					assistantGUI assistantGui = new assistantGUI(assistant, people);
 					assistantGui.setVisible(true);
 					setVisible(false);
 					dispose();
