@@ -22,11 +22,15 @@ public class assistantGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private Assistant assistant;
+	private ArrayList<People> people;
 
 	/**
 	 * Create the frame.
 	 */
-	public assistantGUI() {
+	public assistantGUI(Assistant a, ArrayList<People> p) {
+		this.assistant = a;
+		this.people = p;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500,500);
 		// get inventory
@@ -87,6 +91,18 @@ public class assistantGUI extends JFrame {
 		
 		ActionListener signOut = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				assistantGUI.this.people.add(assistantGUI.this.assistant);
+				try {
+                    FileOutputStream f = new FileOutputStream("ppl.bin");
+                    ObjectOutputStream o = new ObjectOutputStream(f);
+                    o.writeObject(assistantGUI.this.people);
+                    o.close();
+                  } catch (FileNotFoundException n) {
+                    System.out.println("Error: File not found");
+                  } catch (IOException i) {
+                    System.out.println("Error writing to file:" + i.getMessage());
+                    i.printStackTrace(); 
+                  }
 				try {
                     FileOutputStream f = new FileOutputStream("data.bin");
                     ObjectOutputStream o = new ObjectOutputStream(f);
@@ -98,11 +114,15 @@ public class assistantGUI extends JFrame {
                     System.out.println("Error writing to file:" + i.getMessage());
                     i.printStackTrace();
                   }
-				signInGUI sGUI = new signInGUI();
-				sGUI.setVisible(true);
-				sGUI.setSize(500,500);
-				setVisible(false);
-				dispose();
+				try {
+					signInGUI frame = new signInGUI();
+					frame.setVisible(true);
+					frame.setSize(500,500); 
+				} catch (Exception a) {
+					a.printStackTrace();
+				}
+                setVisible(false);
+                dispose();
 			}
 		};
 		signOutBtn.addActionListener(signOut);
