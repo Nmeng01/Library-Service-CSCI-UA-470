@@ -263,7 +263,8 @@ public class userGUI extends JFrame {
 		signOutBtn.setBounds(169, 241, 150, 20);
 		getContentPane().setLayout(null);
 		getContentPane().add(borrowBtn); getContentPane().add(returnBtn); 
-		getContentPane().add(allItemsBtn); getContentPane().add(requestItemBtn); getContentPane().add(signOutBtn);
+		getContentPane().add(allItemsBtn);  getContentPane().add(signOutBtn);
+		//getContentPane().add(requestItemBtn);
 		getContentPane().add(question);
 	}
 	
