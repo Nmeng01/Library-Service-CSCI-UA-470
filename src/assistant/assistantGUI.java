@@ -66,6 +66,25 @@ public class assistantGUI extends JFrame {
 		};
 		addBtn.addActionListener(add);
 		
+		ActionListener delete = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deleteItemGUI deleteItem = new deleteItemGUI(inventory, assistantGUI.this);
+				deleteItem.setVisible(true);
+				setVisible(false);
+			}
+		};
+		
+		removeBtn.addActionListener(delete);
+		
+		ActionListener openRequestList = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				requestListGUI reqGUI = new requestListGUI(inventory, assistantGUI.this);
+				reqGUI.setVisible(true);
+				setVisible(false);
+			}
+		};
+		viewRequestsBtn.addActionListener(openRequestList);
+		
 		ActionListener signOut = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

@@ -36,6 +36,13 @@ public abstract class LibraryItem implements Serializable {
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
+
+	@Override
+	public String toString() {
+		return "Name: " + name + ", Type: " + this.getClass();
+	}
+	
+	
 	
 	
 

@@ -38,6 +38,12 @@ public class Movie extends LibraryItem {
 	public void setNotableActors(ArrayList<String> notableActors) {
 		this.notableActors = notableActors;
 	}
+
+	@Override
+	public String toString() {
+		return "Movie - Name: " + this.getName() + " | Genre: " + this.getGenre() + " | Borrowed: " + this.isBorrowed();
+
+	}
 	
 	
 
