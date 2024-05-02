@@ -84,7 +84,9 @@ public class deleteItemGUI extends JFrame {
 		ArrayList<LibraryItem> data = inv.getInventory();
 		DefaultListModel<LibraryItem> listModel = new DefaultListModel<>();
 		for (int i = 0; i < data.size(); i++) {
-			listModel.addElement(data.get(i));
+			if(!(data.get(i).isBorrowed())) {
+				listModel.addElement(data.get(i));
+			}
 		}
 		return listModel;
 		

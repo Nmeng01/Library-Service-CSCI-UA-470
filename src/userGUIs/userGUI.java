@@ -97,7 +97,6 @@ public class userGUI extends JFrame {
 				JTable availableInventory;
 				Inventory inventory = readInventory();
             	ArrayList<LibraryItem> items = inventory.displayAll();
-            	
             	List<String[]> tableData = new ArrayList<>();
 				for(LibraryItem item: items) {
 					if(item.isBorrowed() == false) {
@@ -129,25 +128,41 @@ public class userGUI extends JFrame {
 				 
 				availableInventory.getSelectionModel().addListSelectionListener( new ListSelectionListener () {
 					  public void valueChanged(ListSelectionEvent event) {
-						  int selectedRow = availableInventory.getSelectedRow();
-						  Object itemName = availableInventory.getValueAt(selectedRow, 0); 
-						  for(LibraryItem item: items) {
-							  if (item.getName().equals(itemName)) {
-				                    item.setBorrowed(true);	
-//				                    System.out.println("i updated!!!");
-							  }
-			            	}
-						  JOptionPane.showMessageDialog(null, "You have checked out: "+itemName);
-						  Inventory inventoryNew = new Inventory();
-						  LibraryItem borrowed = null;
-						  for(LibraryItem item: items) {
-							  inventoryNew.addItem(item);
-							  borrowed = item;
-			              }
-					      writeInventory(inventoryNew); 
-					      u.borrowItem(borrowed);					      
-					      revalidate();
-					      repaint();
+						  if (!event.getValueIsAdjusting()) {  
+						  	int selectedRow = availableInventory.getSelectedRow();
+						  	if (selectedRow != -1) {	
+								  Object itemName = availableInventory.getValueAt(selectedRow, 0); 
+								  for(LibraryItem item: items) {
+									  if (item.getName().equals(itemName)) {
+						                    item.setBorrowed(true);	
+						                    u.borrowItem(item);
+						                    Inventory inventoryNew = new Inventory();
+						                    inventoryNew.setInventory(items);
+						                    writeInventory(inventoryNew); 
+						                    break;
+									  }
+					            	}
+								  JOptionPane.showMessageDialog(null, "You have checked out: "+itemName);
+								  ArrayList<LibraryItem> newItems = readInventory().displayAll();
+								  if(!(newItems.isEmpty())) {
+									  List<String[]> newTableData = new ArrayList<>();
+									  for (LibraryItem item : newItems) {
+										  if(item.isBorrowed() == false) {
+											  String[] rowData = {item.getName(), item.getGenre()};
+											  newTableData.add(rowData);
+										  }
+									  }
+									  String[][] newTableData2 = new String[newTableData.size()][];
+									  newTableData.toArray(newTableData2);
+									  availableInventory.setModel(new DefaultTableModel(newTableData2, columnNames));
+								  }
+								  else {
+									  availableInventory.setModel(new DefaultTableModel(new String[][]{}, columnNames));
+								  }
+							      revalidate();
+							      repaint();
+						  	}
+						  }
 					  }
 				});
 				//idea source: https://stackoverflow.com/questions/4795586/determine-which-jtable-cell-is-clicked
@@ -197,24 +212,41 @@ public class userGUI extends JFrame {
 					 
 					availableInventory.getSelectionModel().addListSelectionListener( new ListSelectionListener () {
 						  public void valueChanged(ListSelectionEvent event) {
-							  int selectedRow = availableInventory.getSelectedRow();
-							  Object itemName = availableInventory.getValueAt(selectedRow, 0); 
-							  for(LibraryItem item: items) {
-								  if (item.getName().equals(itemName)) {
-					                    item.setBorrowed(false);	
+							  if (!event.getValueIsAdjusting()) {
+								  int selectedRow = availableInventory.getSelectedRow();
+								  if (selectedRow != -1) {
+									  Object itemName = availableInventory.getValueAt(selectedRow, 0); 
+									  Inventory inventory = readInventory();
+						              ArrayList<LibraryItem> invItems = inventory.displayAll();
+									  for(LibraryItem item: invItems) {
+										  if (item.getName().equals(itemName)) {
+							                    item.setBorrowed(false);	
+							                    u.returnItem(item);
+							                    Inventory inventoryNew = new Inventory();
+							                    inventoryNew.setInventory(invItems);
+							                    writeInventory(inventoryNew); 
+							                    break;
+										  }
+						            	}
+									  JOptionPane.showMessageDialog(null, "You have returned: "+itemName);
+									  ArrayList<LibraryItem> newItems = u.viewItems();
+									  if(!(newItems.isEmpty())) {
+										  List<String[]> newTableData = new ArrayList<>();
+										  for (LibraryItem item : newItems) {
+											  String[] rowData = {item.getName(), item.getGenre()};
+											  newTableData.add(rowData);
+										  }
+										  String[][] newTableData2 = new String[newTableData.size()][];
+										  newTableData.toArray(newTableData2);
+										  availableInventory.setModel(new DefaultTableModel(newTableData2, columnNames));
+									  }
+									  else {
+										  availableInventory.setModel(new DefaultTableModel(new String[][]{}, columnNames));
+									  }
 								  }
-				            	}
-							  JOptionPane.showMessageDialog(null, "You have returned: "+itemName);
-							  Inventory inventoryNew = new Inventory();
-							  LibraryItem borrowed = null;
-							  for(LibraryItem item: items) {
-								  inventoryNew.addItem(item);
-								  borrowed = item;
-				              }
-						      writeInventory(inventoryNew); 
-						      u.returnItem(borrowed);					      
-						      revalidate();
-						      repaint();
+							      revalidate();
+							      repaint();
+							  }
 						  }
 					});
 					//idea source: https://stackoverflow.com/questions/4795586/determine-which-jtable-cell-is-clicked
