@@ -13,7 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class userGUI extends JFrame {
 				backBtn.setBounds(0, 0, 89, 23);
 				 ActionListener backBtnAction = (new ActionListener() {
 				 	 public void actionPerformed(ActionEvent e) {
-				 		getContentPane().add(borrowBtn); getContentPane().add(returnBtn); getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn); getContentPane().add(question);
+				 		getContentPane().add(borrowBtn); getContentPane().add(returnBtn); getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn); getContentPane().add(question);getContentPane().add(requestItemBtn);
 						getContentPane().remove(availableInventory);
 						getContentPane().remove(backBtn);
 						revalidate();
@@ -82,16 +82,15 @@ public class userGUI extends JFrame {
 				 	}
 				  });
 				 
-				 backBtn.addActionListener(backBtnAction);
+				backBtn.addActionListener(backBtnAction);
 				 
-				getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question);
+				getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question);getContentPane().remove(requestItemBtn);
 				getContentPane().add(availableInventory); getContentPane().add(backBtn);
 				revalidate();
 		 		repaint();
             }
 					
         });
-
 		borrowBtn.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JTable availableInventory;
@@ -114,17 +113,17 @@ public class userGUI extends JFrame {
 				JButton backBtn = new JButton("Back");
 				backBtn.setBounds(0, 0, 89, 23);
 
-				 ActionListener backBtnAction = (new ActionListener() {
-				 	 public void actionPerformed(ActionEvent e) {
-				 		getContentPane().add(borrowBtn); getContentPane().add(returnBtn); getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn); getContentPane().add(question);
-						getContentPane().remove(availableInventory);
-						getContentPane().remove(backBtn);
-						revalidate();
-				 		repaint();
-				 	}
-				  });
+				ActionListener backBtnAction = (new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					getContentPane().add(borrowBtn); getContentPane().add(returnBtn); getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn); getContentPane().add(question);getContentPane().add(requestItemBtn);
+					getContentPane().remove(availableInventory);
+					getContentPane().remove(backBtn);
+					revalidate();
+					repaint();
+				}
+				});
 				 
-				 backBtn.addActionListener(backBtnAction);
+				backBtn.addActionListener(backBtnAction);
 				 
 				availableInventory.getSelectionModel().addListSelectionListener( new ListSelectionListener () {
 					  public void valueChanged(ListSelectionEvent event) {
@@ -167,7 +166,7 @@ public class userGUI extends JFrame {
 				});
 				//idea source: https://stackoverflow.com/questions/4795586/determine-which-jtable-cell-is-clicked
 				//revalidate();
-				getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question);
+				getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question); getContentPane().remove(requestItemBtn);
 				getContentPane().add(availableInventory); getContentPane().add(backBtn);
 				revalidate();
 		 		repaint();
@@ -178,7 +177,6 @@ public class userGUI extends JFrame {
 		});
 		//idea sources: https://www.digitalocean.com/community/tutorials/java-list-add-addall-methods
 		//idea source: https://www.geeksforgeeks.org/java-swing-jtable/
-
 		returnBtn.addActionListener( new ActionListener() {
 			 public void actionPerformed(ActionEvent e) {
 				    JTable availableInventory;
@@ -198,9 +196,9 @@ public class userGUI extends JFrame {
 					JButton backBtn = new JButton("Back");
 					backBtn.setBounds(0, 0, 89, 23);
 
-					 ActionListener backBtnAction = (new ActionListener() {
+					ActionListener backBtnAction = (new ActionListener() {
 					 	 public void actionPerformed(ActionEvent e) {
-					 		getContentPane().add(borrowBtn); getContentPane().add(returnBtn); getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn); getContentPane().add(question);
+					 		getContentPane().add(borrowBtn); getContentPane().add(returnBtn); getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn); getContentPane().add(question);getContentPane().add(requestItemBtn);
 							getContentPane().remove(availableInventory);
 							getContentPane().remove(backBtn);
 							revalidate();
@@ -208,7 +206,7 @@ public class userGUI extends JFrame {
 					 	}
 					  });
 					 
-					 backBtn.addActionListener(backBtnAction);
+					backBtn.addActionListener(backBtnAction);
 					 
 					availableInventory.getSelectionModel().addListSelectionListener( new ListSelectionListener () {
 						  public void valueChanged(ListSelectionEvent event) {
@@ -251,7 +249,7 @@ public class userGUI extends JFrame {
 					});
 					//idea source: https://stackoverflow.com/questions/4795586/determine-which-jtable-cell-is-clicked
 					//revalidate();
-					getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question);
+					getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question);getContentPane().remove(requestItemBtn);
 					getContentPane().add(availableInventory); getContentPane().add(backBtn);
 					revalidate();
 			 		repaint();
@@ -286,7 +284,55 @@ public class userGUI extends JFrame {
                 dispose();
             }
         });
-		
+		requestItemBtn.addActionListener( new ActionListener() {
+			 public void actionPerformed(ActionEvent e) {
+				 JLabel newItemLbl; JTextField newItemTxt;
+				 newItemLbl = new JLabel("What is the item you would like to request?");
+				 newItemLbl.setBounds(109, 145, 300, 20);
+				 newItemTxt = new JTextField();
+				 newItemTxt.setBounds(169, 177, 150, 20);
+
+				 Inventory inventory = readInventory();
+            	 ArrayList<String> requests = inventory.getRequestList();
+
+				JButton backBtn = new JButton("Back");
+				backBtn.setBounds(0, 0, 89, 23);
+
+				backBtn.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							getContentPane().add(borrowBtn); getContentPane().add(returnBtn); getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn); getContentPane().add(question);getContentPane().add(requestItemBtn);
+							getContentPane().remove(newItemLbl); getContentPane().remove(newItemTxt); getContentPane().remove(backBtn); 
+							revalidate();
+							repaint();
+						}
+				});
+
+				 newItemTxt.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							String name = newItemTxt.getText();
+							// System.out.println(name);
+							requests.add(name);
+							Inventory newInv = new Inventory();
+							newInv.setRequestList(requests);
+							writeInventory(newInv);
+							JOptionPane.showMessageDialog(null, "You have requested: "+ name);
+							getContentPane().add(borrowBtn); getContentPane().add(returnBtn); getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn); getContentPane().add(question);getContentPane().add(requestItemBtn);
+							getContentPane().remove(newItemLbl); getContentPane().remove(newItemTxt); getContentPane().remove(backBtn); 
+							revalidate();
+							repaint();
+
+						}
+				 });
+			
+				 getContentPane().remove(borrowBtn); getContentPane().remove(returnBtn); getContentPane().remove(allItemsBtn); getContentPane().remove(signOutBtn); getContentPane().remove(question);getContentPane().remove(requestItemBtn);
+				 getContentPane().add(newItemLbl); getContentPane().add(newItemTxt); getContentPane().add(backBtn);
+				 revalidate();
+				 repaint();
+
+			 }
+		});
+
+
 		question.setBounds(169, 81, 150, 20);
 		borrowBtn.setBounds(169, 113, 150, 20);
 		returnBtn.setBounds(169, 145, 150, 20);
@@ -296,7 +342,7 @@ public class userGUI extends JFrame {
 		getContentPane().setLayout(null);
 		getContentPane().add(borrowBtn); getContentPane().add(returnBtn); 
 		getContentPane().add(allItemsBtn);  getContentPane().add(signOutBtn);
-		//getContentPane().add(requestItemBtn);
+		getContentPane().add(requestItemBtn);
 		getContentPane().add(question);
 	}
 	
