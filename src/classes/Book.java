@@ -28,7 +28,7 @@ public class Book extends LibraryItem {
 
 	@Override
 	public String toString() {
-		return "Book - Name: " + this.getName() + " | Genre: " + this.getGenre() + " | Borrowed: " + this.isBorrowed();
+		return this.getName() + " (Book)";
 
 	}
 	

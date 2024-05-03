@@ -22,6 +22,8 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.AbstractListModel;
 
+import java.util.Comparator;
+
 public class deleteItemGUI extends JFrame {
 
 	private JPanel contentPane;
@@ -81,12 +83,23 @@ public class deleteItemGUI extends JFrame {
 	
 	// Take Inventory Object and return an Array of Library Items
 	private DefaultListModel<LibraryItem> inventoryDisplay(Inventory inv) {
-		ArrayList<LibraryItem> data = inv.getInventory();
+		ArrayList<LibraryItem> data = inv.displayAll();
 		DefaultListModel<LibraryItem> listModel = new DefaultListModel<>();
-		for (int i = 0; i < data.size(); i++) {
-			if(!(data.get(i).isBorrowed())) {
-				listModel.addElement(data.get(i));
-			}
+		ArrayList<LibraryItem> temp = new ArrayList<>();
+		for (LibraryItem item : data) {
+		    if (!(item.isBorrowed())) {
+		        temp.add(item);
+		    }
+		}
+		temp.sort(new Comparator<LibraryItem>() {
+		    @Override
+		    public int compare(LibraryItem item1, LibraryItem item2) {
+		        return item1.getName().compareTo(item2.getName());
+		    }
+		});
+		
+		for (LibraryItem item : temp) {
+		    listModel.addElement(item);
 		}
 		return listModel;
 		

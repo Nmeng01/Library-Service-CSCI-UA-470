@@ -39,16 +39,12 @@ public class Inventory implements Serializable {
 		return this.inventory;
 	}
 
-	public ArrayList<LibraryItem> getInventory() {
-		return inventory;
-	}
-
 	public void setInventory(ArrayList<LibraryItem> inventory) {
 		this.inventory = inventory;
 	}
 
 	public ArrayList<String> getRequestList() {
-		return requestList;
+		return this.requestList;
 	}
 
 	public void setRequestList(ArrayList<String> requestList) {
