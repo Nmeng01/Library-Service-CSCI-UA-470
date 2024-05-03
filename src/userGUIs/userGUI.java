@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import login.*;
 import classes.*;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class userGUI extends JFrame {
@@ -61,12 +63,18 @@ public class userGUI extends JFrame {
             	ArrayList<LibraryItem> items = u.viewItems();
             	List<String[]> tableData = new ArrayList<>();
 				for(LibraryItem item: items) {
-					String[] rowData = {item.getName(), item.getGenre()};	
+					String[] rowData = {item.getName(), item.getGenre(), item.getClass().getName().substring(8)};	
 					tableData.add(rowData);
 				}
+				Collections.sort(tableData, new Comparator<String[]>() {
+				    @Override
+				    public int compare(String[] r1, String[] r2) {
+				        return r1[0].compareTo(r2[0]);
+				    }
+				});
 				String[][] tableData2 = new String[tableData.size()][];
 				tableData.toArray(tableData2);
-				String[] columnNames = { "Name", "Genre" };
+				String[] columnNames = { "Name", "Genre", "Type" };
 				availableInventory = new JTable(tableData2, columnNames);
 				availableInventory.setDefaultEditor(Object.class, null);  //to make sure users can't edit the table values bc or else they can double click and modify it :(
 				availableInventory.setBounds(0,23,500,500);
@@ -99,13 +107,19 @@ public class userGUI extends JFrame {
             	List<String[]> tableData = new ArrayList<>();
 				for(LibraryItem item: items) {
 					if(item.isBorrowed() == false) {
-						String[] rowData = {item.getName(), item.getGenre()};
+						String[] rowData = {item.getName(), item.getGenre(), item.getClass().getName().substring(8)};
 					    tableData.add(rowData);
 					}
             	}
+				Collections.sort(tableData, new Comparator<String[]>() {
+				    @Override
+				    public int compare(String[] r1, String[] r2) {
+				        return r1[0].compareTo(r2[0]);
+				    }
+				});
 				String[][] tableData2 = new String[tableData.size()][];
 				tableData.toArray(tableData2);
-				String[] columnNames = { "Name", "Genre" };
+				String[] columnNames = { "Name", "Genre", "Type" };
 				availableInventory = new JTable(tableData2, columnNames);
 				availableInventory.setDefaultEditor(Object.class, null);  //to make sure users can't edit the table values bc or else they can double click and modify it :(
 				availableInventory.setBounds(0,23,500,500);
@@ -137,6 +151,7 @@ public class userGUI extends JFrame {
 						                    u.borrowItem(item);
 						                    Inventory inventoryNew = new Inventory();
 						                    inventoryNew.setInventory(items);
+						                    inventoryNew.setRequestList(inventory.getRequestList());
 						                    writeInventory(inventoryNew); 
 						                    break;
 									  }
@@ -147,10 +162,16 @@ public class userGUI extends JFrame {
 									  List<String[]> newTableData = new ArrayList<>();
 									  for (LibraryItem item : newItems) {
 										  if(item.isBorrowed() == false) {
-											  String[] rowData = {item.getName(), item.getGenre()};
+											  String[] rowData = {item.getName(), item.getGenre(), item.getClass().getName().substring(8)};
 											  newTableData.add(rowData);
 										  }
 									  }
+									  Collections.sort(newTableData, new Comparator<String[]>() {
+										    @Override
+										    public int compare(String[] r1, String[] r2) {
+										        return r1[0].compareTo(r2[0]);
+										    }
+										});
 									  String[][] newTableData2 = new String[newTableData.size()][];
 									  newTableData.toArray(newTableData2);
 									  availableInventory.setModel(new DefaultTableModel(newTableData2, columnNames));
@@ -183,12 +204,18 @@ public class userGUI extends JFrame {
 	            	ArrayList<LibraryItem> items = u.viewItems();
 	            	List<String[]> tableData = new ArrayList<>();
 					for(LibraryItem item: items) {
-						String[] rowData = {item.getName(), item.getGenre()};	
+						String[] rowData = {item.getName(), item.getGenre(), item.getClass().getName().substring(8)};	
 						tableData.add(rowData);
 					}
+					Collections.sort(tableData, new Comparator<String[]>() {
+					    @Override
+					    public int compare(String[] r1, String[] r2) {
+					        return r1[0].compareTo(r2[0]);
+					    }
+					});
 					String[][] tableData2 = new String[tableData.size()][];
 					tableData.toArray(tableData2);
-					String[] columnNames = { "Name", "Genre" };
+					String[] columnNames = { "Name", "Genre", "Type" };
 					availableInventory = new JTable(tableData2, columnNames);
 					availableInventory.setDefaultEditor(Object.class, null);  //to make sure users can't edit the table values bc or else they can double click and modify it :(
 					availableInventory.setBounds(0,23,500,500);
@@ -222,6 +249,7 @@ public class userGUI extends JFrame {
 							                    u.returnItem(item);
 							                    Inventory inventoryNew = new Inventory();
 							                    inventoryNew.setInventory(invItems);
+							                    inventoryNew.setRequestList(inventory.getRequestList());
 							                    writeInventory(inventoryNew); 
 							                    break;
 										  }
@@ -231,9 +259,15 @@ public class userGUI extends JFrame {
 									  if(!(newItems.isEmpty())) {
 										  List<String[]> newTableData = new ArrayList<>();
 										  for (LibraryItem item : newItems) {
-											  String[] rowData = {item.getName(), item.getGenre()};
+											  String[] rowData = {item.getName(), item.getGenre(), item.getClass().getName().substring(8)};
 											  newTableData.add(rowData);
 										  }
+										  Collections.sort(newTableData, new Comparator<String[]>() {
+											    @Override
+											    public int compare(String[] r1, String[] r2) {
+											        return r1[0].compareTo(r2[0]);
+											    }
+											});
 										  String[][] newTableData2 = new String[newTableData.size()][];
 										  newTableData.toArray(newTableData2);
 										  availableInventory.setModel(new DefaultTableModel(newTableData2, columnNames));
@@ -310,11 +344,9 @@ public class userGUI extends JFrame {
 				 newItemTxt.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							String name = newItemTxt.getText();
-							// System.out.println(name);
 							requests.add(name);
-							Inventory newInv = new Inventory();
-							newInv.setRequestList(requests);
-							writeInventory(newInv);
+							inventory.setRequestList(requests);
+							writeInventory(inventory);
 							JOptionPane.showMessageDialog(null, "You have requested: "+ name);
 							getContentPane().add(borrowBtn); getContentPane().add(returnBtn); getContentPane().add(allItemsBtn); getContentPane().add(signOutBtn); getContentPane().add(question);getContentPane().add(requestItemBtn);
 							getContentPane().remove(newItemLbl); getContentPane().remove(newItemTxt); getContentPane().remove(backBtn); 

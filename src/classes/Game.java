@@ -22,7 +22,7 @@ public class Game extends LibraryItem {
 	}
 	@Override
 	public String toString() {
-		return "Game - Name: " + this.getName() + " | Genre: " + this.getGenre() + " | Borrowed: " + this.isBorrowed();
+		return this.getName() + " (Game)";
 
 	}
 	

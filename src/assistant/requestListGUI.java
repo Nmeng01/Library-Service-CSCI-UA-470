@@ -17,6 +17,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
+import java.util.Collections;
+
 public class requestListGUI extends JFrame {
 
 	private JPanel contentPane;
@@ -73,6 +75,7 @@ public class requestListGUI extends JFrame {
 	// Take Inventory Object and return an Array of Strings
 	private DefaultListModel<String> requestListDisplay(Inventory inv) {
 		ArrayList<String> data = inv.getRequestList();
+		Collections.sort(data);
 		DefaultListModel<String> listModel = new DefaultListModel<>();
 		for (int i = 0; i < data.size(); i++) {
 			listModel.addElement(data.get(i));

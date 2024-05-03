@@ -41,7 +41,7 @@ public class Movie extends LibraryItem {
 
 	@Override
 	public String toString() {
-		return "Movie - Name: " + this.getName() + " | Genre: " + this.getGenre() + " | Borrowed: " + this.isBorrowed();
+		return this.getName() + " (Movie)";
 
 	}
 	
