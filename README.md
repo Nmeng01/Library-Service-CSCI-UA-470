@@ -24,7 +24,7 @@
 
 ### Return Item Sequence Diagram
 
-![return item](./diagrams/returnSequenceDiagram.jpg)
+![return item](./diagrams/returnSequenceDiagram.png)
 
 ### Add Item Sequence Diagram
 
