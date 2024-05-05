@@ -2,6 +2,10 @@
 
 ## Concept
 
+### Class Diagram
+
+![ClassDiagram](./diagrams/ClassDiagram.png)
+
 ### Use Case Diagram
 
 ![Usecase](./diagrams/UsecaseDiagram.png)
