@@ -1,8 +1,22 @@
-We can probably put our diagrams here
+# Library Service App
+
+## Concept
 
 ### Use Case Diagram
 
 ![Usecase](./diagrams/UsecaseDiagram.png)
+
+### Login as new user Sequence Diagram
+
+![new user login](./diagrams/newUser.jpg)
+
+### Login as existing user Sequence Diagram
+
+![old user login](./diagrams/oldUser.jpg)
+
+### Borrow item Sequence Diagram
+
+![borrow item](./diagrams/borrow.jpg)
 
 ### Add Item Sequence Diagram
 
