@@ -22,6 +22,10 @@
 
 ![borrow item](./diagrams/borrow.jpg)
 
+### Return Item Sequence Diagram
+
+![return item](./diagrams/returnSequenceDiagram.jpg)
+
 ### Add Item Sequence Diagram
 
 ![AddItemSq](./diagrams/AddItemSequence.png)
