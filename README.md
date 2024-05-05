@@ -26,6 +26,10 @@
 
 ![return item](./diagrams/returnSequenceDiagram.png)
 
+### View All Sequence Diagram
+
+![view all items](./diagrams/viewAllSequenceDiagram.png)
+
 ### Add Item Sequence Diagram
 
 ![AddItemSq](./diagrams/AddItemSequence.png)
