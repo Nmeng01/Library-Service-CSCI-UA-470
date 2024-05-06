@@ -4,7 +4,7 @@
 
 ### Class Diagram
 
-![ClassDiagram](./diagrams/ClassDiagram.png)
+![ClassDiagram](./diagrams/Class_Diagram.png)
 
 ### Use Case Diagram
 
