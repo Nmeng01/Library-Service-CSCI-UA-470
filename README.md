@@ -1,6 +1,7 @@
 # Library Service App
 
 ## Concept
+The idea behind this app is to have a system for libraries that easily allows customers and library assistants to manage their accounts and the library inventory, respectively. With our app, users can easily log which items they have checked out, and they can just as easily mark which items they have returned. The app seamlessly updates the current inventory as customers borrow and return items, and even allows them to make requests to the library for items they would like to see available for borrowing. On the other side, assistants can easily update the library inventory whenever new items are added or removed, and they can see what customers have requested to be available in the library too in case the library needs inspiration for new items to add.
 
 ### Class Diagram
 
