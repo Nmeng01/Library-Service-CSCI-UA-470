@@ -16,6 +16,10 @@ The idea behind this app is to have a system for libraries that easily allows cu
 
 ![Usecase](./diagrams/UsecaseDiagram.png)
 
+### Use Case Descriptions
+
+![UsecaseDescriptions(./diagrams/UsecaseDescriptions.png)
+
 ### Login as new user Sequence Diagram
 
 ![new user login](./diagrams/newUser.jpg)
