@@ -18,7 +18,7 @@ The idea behind this app is to have a system for libraries that easily allows cu
 
 ### Use Case Descriptions
 
-![UsecaseDescriptions(./diagrams/UseCaseDescriptions.png)
+![UsecaseDescriptions](./diagrams/UseCaseDescriptions.png)
 
 ### Login as new user Sequence Diagram
 
