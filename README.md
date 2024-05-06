@@ -5,9 +5,7 @@ The idea behind this app is to have a system for libraries that easily allows cu
 
 ## Important Notes
 - Whenever you perform actions as a user or assistant, you must click the 'Sign out' button for the changes to be saved. Simply exiting the app without signing out will not save anything done in that session.
-- It is easiest to run the app through the terminal. Make sure that your current path is in Library-Service/src. Then, run these commands:
-  javac Main.java  -d ../bin 
-  java -classpath ../bin Main
+- It is easiest to run the app through the terminal. Make sure that your current path is in Library-Service/src. Then, run these two commands: javac Main.java  -d ../bin | java -classpath ../bin Main
 - If for some reason, you want to clear the memory of the system, you will have to delete both the current ppl.bin and data.bin files- you cannot keep one of them and delete the other.
 
 ### Class Diagram
